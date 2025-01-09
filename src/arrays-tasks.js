@@ -452,9 +452,10 @@ function getIndicesOfOddNumbers(numbers) {
  *    getHexRGBValues([]) => []
  */
 function getHexRGBValues(arr) {
-  return arr.map((num) =>
-    `#${num.toString(16).padStart(6, '0').toUpperCase()}`
-  );
+  function hex(num) {
+    return `0${num.toString(16)}`.slice(-6).toUpperCase();
+  }
+  return arr.map((num) => `#${hex(num)}`);
 }
 
 /**
@@ -505,8 +506,8 @@ function findCommonElements(arr1, arr2) {
 function findLongestIncreasingSubsequence(nums) {
   if (nums.length === 0) return 0;
   const dp = Array(nums.length).fill(1);
-  for (let i = 1; i < nums.length; i++) {
-    for (let j = 0; j < i; j++) {
+  for (let i = 1; i < nums.length; i += 1) {
+    for (let j = 0; j < i; j += 1) {
       if (nums[i] > nums[j]) {
         dp[i] = Math.max(dp[i], dp[j] + 1);
       }
