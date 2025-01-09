@@ -211,7 +211,7 @@ function getHead(arr, n) {
  *    getTail([ 'a', 'b', 'c', 'd'], 0) => []
  */
 function getTail(arr, n) {
-
+  return arr.slice(-n);
 }
 
 /**
@@ -226,8 +226,8 @@ function getTail(arr, n) {
  *    doubleArray([0, 1, 2, 3, 4, 5]) => [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5]
  *    doubleArray([]) => []
  */
-function doubleArray(arr */) {
-
+function doubleArray(arr) {
+  return arr.concat(arr);
 }
 
 /**
@@ -240,9 +240,9 @@ function doubleArray(arr */) {
  *    toStringList([0, false, 'cat', NaN, true, '']) => '0,false,cat,NaN,true,'
  *    toStringList([1, 2, 3, 4, 5]) => '1,2,3,4,5'
  *    toStringList(['rock', 'paper', 'scissors']) => 'rock,paper,scissors'
-  
-function toStringList(  arr  ) {
-
+ */
+function toStringList(arr) {
+  return arr.join(',');
 }
 
 /**
@@ -256,9 +256,9 @@ function toStringList(  arr  ) {
  *   distinct([ 'a', 'a', 'a', 'a' ])  => [ 'a' ]
  *   distinct([ 1, 1, 2, 2, 3, 3, 4, 4]) => [ 1, 2, 3, 4]
  *   distinct([]) => []
-  
-function distinct(  arr  ) {
-
+ */
+function distinct(arr) {
+  return [...new Set(arr)];
 }
 
 /**
@@ -273,9 +273,11 @@ function distinct(  arr  ) {
  *    createNDimensionalArray(3, 2) => [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]
  *    createNDimensionalArray(4, 2) => [[[[0, 0], [0, 0]], [[0, 0], [0, 0]]], [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]]
  *    createNDimensionalArray(1, 1) => [0]
-  
-function createNDimensionalArray(  n, size  ) {
-
+ */
+function createNDimensionalArray(n, size) {
+  if (n === 1) return 0;
+  const arr = new Array(size).fill(0);
+  return arr.map(() => createNDimensionalArray(n - 1, size));
 }
 
 /**
@@ -290,7 +292,7 @@ function createNDimensionalArray(  n, size  ) {
  *    flattenArray([1, 2, 3, 4]) => [1, 2, 3, 4]
  */
 function flattenArray(nestedArray) {
-
+  return nestedArray.flat(Infinity);
 }
 
 /**
@@ -307,7 +309,7 @@ function flattenArray(nestedArray) {
  *   selectMany(['one','two','three'], (x) => x.split('')) =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-
+  return arr.flatMap(childrenSelector);
 }
 
 /**
@@ -324,7 +326,7 @@ function selectMany(arr, childrenSelector) {
  *   calculateBalance([]) => 0
  */
 function calculateBalance(arr) {
-
+  return arr.reduce((acc, [a, b]) => acc + (a - b), 0);
 }
 
 /**
@@ -340,7 +342,11 @@ function calculateBalance(arr) {
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
 function createChunks(arr, chunkSize) {
-
+  const result = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    result.push(arr.slice(i, i + chunkSize));
+  }
+  return result;
 }
 
 /**
@@ -356,7 +362,7 @@ function createChunks(arr, chunkSize) {
  *    generateOdds(5) => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-
+  return Array.from({ length: len }, (_, i) => 2 * i + 1);
 }
 
 /**
@@ -370,9 +376,9 @@ function generateOdds(len) {
  *   getElementByIndices([[1, 2], [3, 4], [5, 6]], [0,0]) => 1        (arr[0][0])
  *   getElementByIndices(['one','two','three'], [2]) => 'three'  (arr[2])
  *   getElementByIndices([[[ 1, 2, 3]]], [ 0, 0, 1 ]) => 2        (arr[0][0][1])
-  
-function getElementByIndices(  arr, indices  ) {
-
+ */
+function getElementByIndices(arr, indices) {
+  return indices.reduce((acc, index) => acc[index], arr);
 }
 
 /**
@@ -388,7 +394,7 @@ function getElementByIndices(  arr, indices  ) {
  *  getFalsyValuesCount([ null, undefined, NaN, false, 0, '' ]) => 6
  */
 function getFalsyValuesCount(arr) {
-
+  return arr.filter((value) => !value).length;
 }
 
 /**
@@ -410,7 +416,9 @@ function getFalsyValuesCount(arr) {
  *                              [0,0,0,0,1]]
  */
 function getIdentityMatrix(n) {
-
+  return Array.from({ length: n }, (outer, i) =>
+    Array.from({ length: n }, (inner, j) => (i === j ? 1 : 0))
+  );
 }
 
 /**
