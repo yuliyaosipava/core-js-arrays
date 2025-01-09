@@ -211,10 +211,9 @@ function getHead(arr, n) {
  *    getTail([ 'a', 'b', 'c', 'd'], 0) => []
  */
 function getTail(arr, n) {
-  if (n > arr.length) return [];
+  if (n === 0) return [];
   return arr.slice(-n);
 }
-
 
 /**
  * Returns the doubled array - elements of the specified array
