@@ -134,7 +134,7 @@ function getStringsLength(arr) {
 function getAverage(arr) {
   if (arr.length === 0) return 0;
   const sum = arr.reduce((acc, num) => acc + num, 0);
-  return sum / arr.length;
+  return Math.round((sum / arr.length) * 100) / 100;
 }
 
 /**
@@ -211,8 +211,10 @@ function getHead(arr, n) {
  *    getTail([ 'a', 'b', 'c', 'd'], 0) => []
  */
 function getTail(arr, n) {
+  if (n > arr.length) return [];
   return arr.slice(-n);
 }
+
 
 /**
  * Returns the doubled array - elements of the specified array
