@@ -21,11 +21,7 @@
  *    getIntervalArray(3, 3) => [ 3 ]
  */
 function getIntervalArray(start, end) {
-  const result = [];
-  for (let i = start; i <= end; i += 1) {
-    result.push(i);
-  }
-  return result;
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
 
 /**
@@ -43,14 +39,10 @@ function getIntervalArray(start, end) {
  */
 function sumArrays(arr1, arr2) {
   const maxLength = Math.max(arr1.length, arr2.length);
-  const result = new Array(maxLength).fill(0);
-
-  for (let i = 0; i < maxLength; i += 1) {
-    const val1 = arr1[i] || 0;
-    const val2 = arr2[i] || 0;
-    result[i] = val1 + val2;
-  }
-  return result;
+  return Array.from(
+    { length: maxLength },
+    (_, i) => (arr1[i] || 0) + (arr2[i] || 0)
+  );
 }
 
 /**
@@ -343,11 +335,12 @@ function calculateBalance(arr) {
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
 function createChunks(arr, chunkSize) {
-  const result = [];
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    result.push(arr.slice(i, i + chunkSize));
-  }
-  return result;
+  return arr.reduce((acc, _, i) => {
+    if (i % chunkSize === 0) {
+      acc.push(arr.slice(i, i + chunkSize));
+    }
+    return acc;
+  }, []);
 }
 
 /**
@@ -505,18 +498,6 @@ function findCommonElements(arr1, arr2) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => longest is [3, 10] and [1, 20] => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => longest is [7, 40, 80] => 3
  */
-function findLongestIncreasingSubsequence(nums) {
-  if (nums.length === 0) return 0;
-  const dp = Array(nums.length).fill(1);
-  for (let i = 1; i < nums.length; i += 1) {
-    for (let j = 0; j < i; j += 1) {
-      if (nums[i] > nums[j]) {
-        dp[i] = Math.max(dp[i], dp[j] + 1);
-      }
-    }
-  }
-  return Math.max(...dp);
-}
 function findLongestIncreasingSubsequence(nums) {
   if (nums.length === 0) return 0;
   const dp = Array(nums.length).fill(1);
